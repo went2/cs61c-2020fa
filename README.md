@@ -2,17 +2,22 @@
 
 cs61c-fa2020 课程资料仓库。
 
-- 课程表：https://web.archive.org/web/20240423100311/https://inst.eecs.berkeley.edu/~cs61c/fa20/
+
+课程表：https://web.archive.org/web/20240423100311/https://inst.eecs.berkeley.edu/~cs61c/fa20/
 
 课程资源：
+|分类|可获取|
+|---|:-:|
+|Videos|   ✅|
+|Homework|  ❌|
+|Labs       |✅|
+|Discussion |✅|
+|Project    |✅|
 
 - Lecture videos: https://www.youtube.com/watch?v=VJ6tuX5bBf4&list=PL0j-r-omG7i0-mnsxN5T4UcVS1Di0isqf
-- Homework: 无资源。
-- Labs: 
-	- fa20: https://github.com/went2/fa20-lab-starter
-	- su2015版 https://github.com/Junren0716/CS61c
-	- fa22 版 https://github.com/Misaka-9982-coder/CS61C-Lab-fa22
-- Discussion: su20 版本的。
+- Homework: 无。
+- Labs: 从课程表链接中打开对应的 Lab 链接访问
+- Discussion: 从课程表链接中打开对应的 Discussion 访问
 - Projects: 
 	- https://github.com/PKUFlyingPig/CS61C-summer20
 	- Proj 01 : https://github.com/Misaka-9982-coder/CS61C-Proj01-fa22
