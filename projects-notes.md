@@ -1,6 +1,6 @@
 # 说明
 
-完成 projects 期间的心得记录。
+完成 cs61c projects 期间的笔记。
 
 ## project 1 Conway's Game of Life
 
@@ -43,9 +43,9 @@ typedef struct Image {
 } Image;
 ```
 
-两个结构体定义，`Color` 保存一个 RGB 颜色，`Image` 保存一个 ppm 类型的图片。
+以上两个结构体定义，`Color` 用来保存一个 RGB 颜色，`Image` 用来保存一个 ppm 类型的图片。
 
-`Image` 结构体定义中的 `Color **image` 是表示二维像素的一种手法，它是一个指针，这个指针指向一个数组，这个数组元素的类型是 `Color*`(指向 Color 的指针)，所以这个（指针数组的）指针的类型是 `Color **image`，其结构可视为：
+`Image` 结构体定义中的 `Color **image` 是表示二维像素的一种手法，它是一个指针，这个指针指向一个数组，这个数组元素的类型是 `Color*`，所以这个指针的类型是 `Color **image`，其结构可视为：
 
 ```
 Image
@@ -71,4 +71,33 @@ img->image = malloc(height * sizeof(Color*));
 for(int i=0; i<height; i++) {
   img->image[i] = malloc(width * sizeof(Color));
 }
+```
+
+上述代码中：
+
+`img->image[i]`: 是指向 Color 的指针（`Color*`)，表示一个 Color 结构体的数组
+`img->image[i][j]`: 是一个 Color 结构体
+
+初始化变量时，要清楚在栈还是堆中申请内存，举例：
+
+```c
+// arr 是个数组，元素是结构体
+// 在栈上申请内存，会自动回收
+// 占用了 2*sizeof(Color) 字节的栈内存
+struct Color arr[2];
+arr[0].R = arr[0].G = arr[0].B = 255;
+
+// arr 是个数组，元素是指针（指针指向结构体）
+// 数组元素被两个 malloc 初始化
+// 占用了 2*sizeof(Color*) 字节的栈内存，2*sizeof(Color) 字节的堆内存
+struct Color *arr2[2];
+arr2[0] = (struct Color *)malloc(sizeof(struct Color));
+arr2[1] = (struct Color *)malloc(sizeof(struct Color));
+
+// 在堆上申请了 2 个 Color 大小的连续内存空间
+// arr3 是个指针，指向第一个 Color 结构体
+// 这比上面那种更高效，因为申请到了连续的内存块
+// arr3 又可看成一个数组，因为 arr3[1] 等价于 &(arr3+1)
+Color *arr3 = malloc(2 * sizeof(Color));
+arr3[0].R = arr3[0].G = arr3[0].B = 255;
 ```
