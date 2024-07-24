@@ -1,4 +1,4 @@
-# 第三周 浮点数、RISC-V 入门
+# 浮点数
 
 ## 6.1 Basics & Fixed Point
 
