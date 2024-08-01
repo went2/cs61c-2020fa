@@ -55,19 +55,21 @@ four: 2nd operand for operation (source2, x3)
 
 如此固定的格式让硬件实现起来变得简单。
 
-- 汇编语言中的加法：
+- 汇编语言中的加法指令 add：
   - eg: add x1,x2,x3 (in RISC-V)
   - 等同于: a = b + c (in C)
-  - C 变量与 RISC-V 寄存器的隐射关系:
+  - C 变量与 RISC-V 寄存器的对应关系:
     a <=> x1, b <=> x2, c <=> x3
 
-- 汇编语言中的减法：
+- 汇编语言中的减法指令 sub：
   - eg: sub x3,x4,x5 (in RISC-V)
-  - 等同于: d = e + f (in C)
-  - C 变量与 RISC-V 寄存器的隐射关系:
+  - 等同于: d = e - f (in C)
+  - C 变量与 RISC-V 寄存器的对应关系:
     d <=> x3, e <=> x4, f <=> x5
 
-遇到多个参数的 C 语句就要组合多个指令:
+减法指令中，第一个 operand 是被减数，第二个是减数
+
+遇到多个参数的 C 语句要组合多个指令:
 a = b + c + d - e;
 
 用多条指令执行:
@@ -79,7 +81,7 @@ sub x10, x10, x4  # a = temp - e
 
 ## 4. 汇编语言中的常数：immediates
 
-计算中常会涉及到常数，如 `a=b+10;`，这个10就是常数，常数在汇编语言中的常数叫 immediates, 涉及到 immediates 的加法用指令 `addi`，如
+计算中常会涉及到常数，如 `a=b+10;`，这个10是常数，常数在汇编语言中的常数叫 immediates, 涉及到 immediates 的加法用指令 `addi`，如
 
 ```
 addi x1, x2, 10 # 对应 C语言中的 a=b+10
@@ -91,12 +93,12 @@ addi one, two, immediates
   - two 是 source
   - immediates 常数
 
-## 5. 汇编语言的操作符：内存地址
+## 5. 汇编语言中操作内存地址
 
 由于计算只能在寄存器中进行，所以涉及到大容量的数据结构（数组、结构体）的计算时，要先将把它们的数据载入到寄存器，再读取寄存器中的值进行运算。
 
-当操作符是内存地址时，就要用数据转移指令(data transfer instruction)，
-- 从内存载入数据到寄存器叫 load，指令为 lw（load word）
+当操作数是内存地址时，就要用数据转移指令(data transfer instruction)，
+- 从内存载入数据到寄存器叫 load, 指令为 lw（load word）
 - 从寄存器复制数据到内存到 store, 指令为 sw（store word）
 
 RISC-V 按字节寻址（每个字节有一个内存地址）。而 C 语言中数组的 index 表示字宽，在汇编中的 offset 需要乘以 4，例如将以下 C 语言代码编译为汇编代码：
@@ -104,7 +106,7 @@ RISC-V 按字节寻址（每个字节有一个内存地址）。而 C 语言中�
 A[12] = h + A[8]
 # 假设数组 A 的 base address 位于 x22, h 位于 x21
 
-lw x9, 32(x22) # 由于按字节寻址，要将数组的索引乘以 4
+lw x9, 32(x22) # 按字节寻址，表示从 x22 这个地址开始的偏移 32 个字节，也就是数组的第 8 号位元素
 add x9, x9, x21
 sw x9, 48(x22) # 将 h+A[8] 的结果保存到 A[12]
 ```
